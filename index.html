@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sentiment Analysis</h1>
+            <p>Analyze the sentiment of your text and get instant feedback.</p>
+        </header>
+        <main>
+            <textarea id="reviewText" placeholder="Enter your review here..."></textarea>
+            <button onclick="submitReview()">Analyze Sentiment</button>
+            <div class="result" id="result"></div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Sentiment Analysis App. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        async function submitReview() {
+            const reviewText = document.getElementById('reviewText').value;
+            const response = await fetch('http://127.0.0.1:5000/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ review: reviewText })
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = `Sentiment: ${result.sentiment}`;
+        }
+    </script>
+</body>
+</html>
+
